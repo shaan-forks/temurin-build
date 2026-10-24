@@ -27,9 +27,8 @@ If anybody ever plans to replace `mk-ca-bundle.pl`, be sure to read [Can I use M
 
 Every time Mozilla updates the list of CA certificates, we have to update our copy of `certdata.txt`. Whether it needs to be updated can be checked on [curl's website][curl-ca-extract]. If it needs updating, the process looks as follows:
 
-1. Download the [current version of certdata.txt][mozilla-certdata].
-2. Replace the existing file in `security`.
-3. Open a pull request to get it merged.
+1. Run `./mk-ca-bundle.pl -d nss-latest-rtm` in `security`. It downloads `certdata.txt` from the [newest NSS release tag][nss-tags] and updates `EXPECTED_COUNT` in `VerifyCACertsTest.java`.
+2. Open a pull request to get it merged.
 
 The updated list will be picked up during the next build.
 
@@ -44,7 +43,8 @@ The `certdata.txt` is automatically updated as part of a GitHub actions workflow
  [support-issues]: https://github.com/adoptium/adoptium-support/issues/13
  [jdk-dev-thread]: https://mail.openjdk.java.net/pipermail/jdk-dev/2020-May/004305.html
  [tsc-decision]: https://github.com/adoptium/adoptium-support/issues/13#issuecomment-635400251
- [mozilla-certdata]: https://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt
+ [mozilla-certdata]: https://hg.mozilla.org/projects/nss/raw-file/default/lib/ckfw/builtins/certdata.txt
+ [nss-tags]: https://hg.mozilla.org/projects/nss/tags
  [mk-ca-bundle.pl]: https://curl.haxx.se/docs/mk-ca-bundle.html
  [curl-ca-extract]: https://curl.haxx.se/docs/caextract.html
  [can-i-use-mozilla]: https://wiki.mozilla.org/CA/FAQ#Can_I_use_Mozilla.27s_set_of_CA_certificates.3F
